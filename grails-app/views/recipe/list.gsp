@@ -28,13 +28,13 @@
 					
 						<g:sortableColumn property="author" title="${message(code: 'recipe.author.label', default: 'Author')}" />
 					
-						<g:sortableColumn property="cook" title="${message(code: 'recipe.cook.label', default: 'Cook')}" />
+						<th><g:message code="recipe.cook.label" default="Cook" /></th>
 					
 						<g:sortableColumn property="description" title="${message(code: 'recipe.description.label', default: 'Description')}" />
 					
-						<g:sortableColumn property="ingredients" title="${message(code: 'recipe.ingredients.label', default: 'Ingredients')}" />
+						<th><g:message code="recipe.prep.label" default="Prep" /></th>
 					
-						<g:sortableColumn property="instructions" title="${message(code: 'recipe.instructions.label', default: 'Instructions')}" />
+						<th><g:message code="recipe.serves.label" default="Serves" /></th>
 					
 					</tr>
 				</thead>
@@ -50,9 +50,9 @@
 					
 						<td>${fieldValue(bean: recipeInstance, field: "description")}</td>
 					
-						<td>${fieldValue(bean: recipeInstance, field: "ingredients")}</td>
+						<td>${fieldValue(bean: recipeInstance, field: "prep")}</td>
 					
-						<td>${fieldValue(bean: recipeInstance, field: "instructions")}</td>
+						<td>${fieldValue(bean: recipeInstance, field: "serves")}</td>
 					
 					</tr>
 				</g:each>

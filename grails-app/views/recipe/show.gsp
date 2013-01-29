@@ -45,7 +45,7 @@
 				<li class="fieldcontain">
 					<span id="cook-label" class="property-label"><g:message code="recipe.cook.label" default="Cook" /></span>
 					
-						<span class="property-value" aria-labelledby="cook-label"><g:fieldValue bean="${recipeInstance}" field="cook"/></span>
+						<span class="property-value" aria-labelledby="cook-label"><g:link controller="time" action="show" id="${recipeInstance?.cook?.id}">${recipeInstance?.cook?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
@@ -59,38 +59,20 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${recipeInstance?.ingredients}">
-				<li class="fieldcontain">
-					<span id="ingredients-label" class="property-label"><g:message code="recipe.ingredients.label" default="Ingredients" /></span>
-					
-						<span class="property-value" aria-labelledby="ingredients-label"><g:fieldValue bean="${recipeInstance}" field="ingredients"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${recipeInstance?.instructions}">
-				<li class="fieldcontain">
-					<span id="instructions-label" class="property-label"><g:message code="recipe.instructions.label" default="Instructions" /></span>
-					
-						<span class="property-value" aria-labelledby="instructions-label"><g:fieldValue bean="${recipeInstance}" field="instructions"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${recipeInstance?.prep}">
 				<li class="fieldcontain">
 					<span id="prep-label" class="property-label"><g:message code="recipe.prep.label" default="Prep" /></span>
 					
-						<span class="property-value" aria-labelledby="prep-label"><g:fieldValue bean="${recipeInstance}" field="prep"/></span>
+						<span class="property-value" aria-labelledby="prep-label"><g:link controller="time" action="show" id="${recipeInstance?.prep?.id}">${recipeInstance?.prep?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${recipeInstance?.tags}">
+				<g:if test="${recipeInstance?.serves}">
 				<li class="fieldcontain">
-					<span id="tags-label" class="property-label"><g:message code="recipe.tags.label" default="Tags" /></span>
+					<span id="serves-label" class="property-label"><g:message code="recipe.serves.label" default="Serves" /></span>
 					
-						<span class="property-value" aria-labelledby="tags-label"><g:fieldValue bean="${recipeInstance}" field="tags"/></span>
+						<span class="property-value" aria-labelledby="serves-label"><g:link controller="servingRange" action="show" id="${recipeInstance?.serves?.id}">${recipeInstance?.serves?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

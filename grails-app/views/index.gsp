@@ -117,6 +117,7 @@
 					</g:each>
 				</ul>
 			</div>
+			<g:customTag/>
 		</div>
 	</body>
 </html>

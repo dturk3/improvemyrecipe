@@ -18,12 +18,12 @@
 	<g:textField name="author" required="" value="${recipeInstance?.author}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: recipeInstance, field: 'cook', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: recipeInstance, field: 'cook', 'error')} required">
 	<label for="cook">
 		<g:message code="recipe.cook.label" default="Cook" />
-		
+		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="cook" value="${recipeInstance?.cook}"/>
+	<g:select id="cook" name="cook.id" from="${improvemyrecipe.Time.list()}" optionKey="id" required="" value="${recipeInstance?.cook?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: recipeInstance, field: 'description', 'error')} ">
@@ -34,35 +34,19 @@
 	<g:textField name="description" value="${recipeInstance?.description}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: recipeInstance, field: 'ingredients', 'error')} ">
-	<label for="ingredients">
-		<g:message code="recipe.ingredients.label" default="Ingredients" />
-		
-	</label>
-	<g:textField name="ingredients" value="${recipeInstance?.ingredients}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: recipeInstance, field: 'instructions', 'error')} ">
-	<label for="instructions">
-		<g:message code="recipe.instructions.label" default="Instructions" />
-		
-	</label>
-	<g:textField name="instructions" value="${recipeInstance?.instructions}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: recipeInstance, field: 'prep', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: recipeInstance, field: 'prep', 'error')} required">
 	<label for="prep">
 		<g:message code="recipe.prep.label" default="Prep" />
-		
+		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="prep" value="${recipeInstance?.prep}"/>
+	<g:select id="prep" name="prep.id" from="${improvemyrecipe.Time.list()}" optionKey="id" required="" value="${recipeInstance?.prep?.id}" class="many-to-one"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: recipeInstance, field: 'tags', 'error')} ">
-	<label for="tags">
-		<g:message code="recipe.tags.label" default="Tags" />
-		
+<div class="fieldcontain ${hasErrors(bean: recipeInstance, field: 'serves', 'error')} required">
+	<label for="serves">
+		<g:message code="recipe.serves.label" default="Serves" />
+		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="tags" value="${recipeInstance?.tags}"/>
+	<g:select id="serves" name="serves.id" from="${improvemyrecipe.ServingRange.list()}" optionKey="id" required="" value="${recipeInstance?.serves?.id}" class="many-to-one"/>
 </div>
 

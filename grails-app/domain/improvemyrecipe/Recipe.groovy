@@ -5,14 +5,17 @@ class Recipe {
     static constraints = {
         title(blank: false)
         author(blank: false)
+		ingredients(blank: false)
+		instructions(blank: false)
     }
 	
 	String title
 	String author
-	String tags
+	List<String> tags
 	String description
-	String ingredients
-	String instructions
-	String prep
-	String cook
+	List<Ingredient> ingredients
+	List<InstructionStep> instructions
+	Time prep
+	Time cook
+	ServingRange serves
 }
