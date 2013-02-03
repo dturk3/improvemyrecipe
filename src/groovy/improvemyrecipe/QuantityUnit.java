@@ -11,4 +11,6 @@ public enum QuantityUnit {
 	cup,
 	pinch,
 	taste,
+	piece,
+	can
 }

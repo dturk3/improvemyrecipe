@@ -5,7 +5,7 @@ class StoredRecipe {
     static constraints = {
     }
 	
-	String filename //UUID
+	String uid
 	StoredChangeset changeset
 	List<StoredChangeset> history
 	List<String> tags

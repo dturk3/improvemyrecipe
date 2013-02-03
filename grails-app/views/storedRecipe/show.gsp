@@ -41,20 +41,20 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${storedRecipeInstance?.filename}">
-				<li class="fieldcontain">
-					<span id="filename-label" class="property-label"><g:message code="storedRecipe.filename.label" default="Filename" /></span>
-					
-						<span class="property-value" aria-labelledby="filename-label"><g:fieldValue bean="${storedRecipeInstance}" field="filename"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${storedRecipeInstance?.likes}">
 				<li class="fieldcontain">
 					<span id="likes-label" class="property-label"><g:message code="storedRecipe.likes.label" default="Likes" /></span>
 					
 						<span class="property-value" aria-labelledby="likes-label"><g:fieldValue bean="${storedRecipeInstance}" field="likes"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${storedRecipeInstance?.uid}">
+				<li class="fieldcontain">
+					<span id="uid-label" class="property-label"><g:message code="storedRecipe.uid.label" default="Uid" /></span>
+					
+						<span class="property-value" aria-labelledby="uid-label"><g:fieldValue bean="${storedRecipeInstance}" field="uid"/></span>
 					
 				</li>
 				</g:if>

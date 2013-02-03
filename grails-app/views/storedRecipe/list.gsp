@@ -28,9 +28,9 @@
 					
 						<g:sortableColumn property="dislikes" title="${message(code: 'storedRecipe.dislikes.label', default: 'Dislikes')}" />
 					
-						<g:sortableColumn property="filename" title="${message(code: 'storedRecipe.filename.label', default: 'Filename')}" />
-					
 						<g:sortableColumn property="likes" title="${message(code: 'storedRecipe.likes.label', default: 'Likes')}" />
+					
+						<g:sortableColumn property="uid" title="${message(code: 'storedRecipe.uid.label', default: 'Uid')}" />
 					
 					</tr>
 				</thead>
@@ -42,9 +42,9 @@
 					
 						<td>${fieldValue(bean: storedRecipeInstance, field: "dislikes")}</td>
 					
-						<td>${fieldValue(bean: storedRecipeInstance, field: "filename")}</td>
-					
 						<td>${fieldValue(bean: storedRecipeInstance, field: "likes")}</td>
+					
+						<td>${fieldValue(bean: storedRecipeInstance, field: "uid")}</td>
 					
 					</tr>
 				</g:each>
