@@ -25,9 +25,9 @@ class RecipeService {
 		HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)
 		NewRecipeResponse rsp = hga.newRecipe(r)
 		StoredRecipe sr = new StoredRecipe().create()
-		sr.setUid(rsp.uid)
+		sr.setUid(rsp.uid.toString())
 		StoredChangeset sc = new StoredChangeset().create()
-		sc.setChangesetId(rsp.cset.revision)
+		sc.setChangesetId("${rsp.cset.revision}")
 		sc.setCreated(rsp.cset.timestamp.date)
 		sc.setCreator(rsp.cset.user)
 		sc.save()
@@ -37,5 +37,6 @@ class RecipeService {
 		sr.setLikes(0)
 		sr.setDislikes(0)
 		sr.save()
+		sr
 	}
 }

@@ -36,7 +36,7 @@ grails.project.dependency.resolution = {
 
         // runtime 'mysql:mysql-connector-java:5.1.20'
 		runtime('com.aragost.javahg:javahg:0.4')
-		runtime('org.jyaml:jyaml:1.3')
+		runtime('org.yaml:snakeyaml:1.10')
 		runtime('com.google.guava:guava:13.0.1')
 		runtime('com.googlecode.java-diff-utils:diffutils:1.2')
     }

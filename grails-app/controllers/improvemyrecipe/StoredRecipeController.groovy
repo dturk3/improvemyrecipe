@@ -5,6 +5,8 @@ import org.springframework.dao.DataIntegrityViolationException
 class StoredRecipeController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	
+	def recipeService
 
     def index() {
         redirect(action: "list", params: params)
@@ -16,6 +18,8 @@ class StoredRecipeController {
     }
 
     def create() {
+		HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)
+		recipeService.storeRecipe(hga.generateRecipe())
         [storedRecipeInstance: new StoredRecipe(params)]
     }
 

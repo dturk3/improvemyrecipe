@@ -4,6 +4,7 @@ package improvemyrecipe
 class Recipe {
 	String title
 	String author
+	Date created
 	List<String> tags
 	String description
 	List<Ingredient> ingredients
@@ -12,7 +13,9 @@ class Recipe {
 	Time cook
 	ServingRange serves
 	
-	Recipe() {}
+	Recipe() {
+		created = new Date()
+	}
 	
 	Recipe(String ttl, String auth, List tgs, String desc, List ing, List inst, Time prp, Time ck, ServingRange srv ) {
 		title=ttl
@@ -24,6 +27,7 @@ class Recipe {
 		prep=prp
 		cook=ck
 		serves=srv
+		created = new Date()
 	}
 	
 	def String toString() {
@@ -38,6 +42,9 @@ TAGS: ${tags}
 
 ${ing}
 ${inst}
+
+Prep time: ${prep}
+Cook time: ${cook}
 """
 	}
 }

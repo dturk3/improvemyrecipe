@@ -80,22 +80,22 @@ def generateRecipe() {
 HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR,Configuration.HG_BIN_PATH)
 def timeStart = new Date().getTime()
 Recipe r = generateRecipe()
-def id
+NewRecipeResponse resp
 try
 {
-	id = hga.newRecipe( r )
+	resp = hga.newRecipe( r )
 }
 finally
 {
 	def timeEnd = new Date().getTime()
 	println "Elapsed " + (timeEnd - timeStart) + " ms"
 	r.description = "Modified the description to test"
-	hga.improveRecipe(r, id)
-	def history = hga.recipeHistory(id)
+	hga.improveRecipe(r, resp.uid)
+	def history = hga.recipeHistory(resp.uid)
 	history.each {
 		println it
 	}
-	def diffs = hga.recipeDiffs(id)
+	def diffs = hga.recipeDiffs(resp.uid)
 	diffs.each {
 		println it
 	}
