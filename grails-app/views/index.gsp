@@ -25,6 +25,8 @@ require([
 <style>@import "themes/claro/document.css";@import "themes/claro/claro.css";@import "app.css";
 </style>
 <script type="text/javascript" src="app.js"></script>
+<g:javascript library="jquery"/>
+<r:layoutResources/>
 </head>
 <body class="claro" data-maq-flow-layout="true" data-maq-comptype="desktop" data-maq-ws="collapse" data-maq-appstates="{}" id="myapp">
  <div data-dojo-type="dijit.layout.BorderContainer" design="headline" persist="false" gutters="true" style="min-width: 1em; min-height: 1px; z-index: 0; width: 100%; height: 100%;">
@@ -46,6 +48,10 @@ improvemyrecipe.com</a>
 <a href="#" class="titlestyle" style="text-decoration: none;">
 |Log In|</a>
 </div>
+<div style="float: right; height: 30%; margin-right: 30px;" class="titlestyle">
+<g:link class="titlestyle" controller="StoredRecipe" action="create">
+|Add Recipe|</g:link>
+</div>
 </div>
  <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="center" splitter="false" maxSize="Infinity" doLayout="false">
   <table border="0" style="border-collapse: collapse; table-layout: fixed; width: 100%; height: 494px;">
@@ -54,6 +60,13 @@ improvemyrecipe.com</a>
       <col></col>
       <col></col>
     </colgroup>
+    <%@ page import="improvemyrecipe.RecipeService" %>
+    <%
+    	def recipeService = grailsApplication.classLoader.loadClass('improvemyrecipe.RecipeService').newInstance()
+	%>
+    <richui:tagCloud class="tag" values="${recipeService.getTagCloud()}" />
+    <g:remoteLink controller="storedRecipe" action="like" id="5" onSuccess="\$('likes5').value=e.responseText;" onLoading="showSpinner();">Test 1</g:remoteLink>
+  <g:recipeTagCloud/>
     <tbody>
       <tr>
         <th class="notepad-heading">
@@ -77,15 +90,14 @@ improvemyrecipe.com</a>
       </tr>
       <tr>
         <td valign="top">
-        <g:link controller="StoredRecipe" action="create">Add Recipe</g:link>
-   			<g:customTag/>
+   			<g:recentRecipes/>
 		</td>
         <td valign="top">
-    <span data-dojo-type="dijit.TitlePane" title="Recipe 1" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" duration="200" open="false" style="min-width: 1em; width: 100%; height: auto;"><div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: 300px; width: 95%;" class="notepad" doLayout="false"></div>
-         </span></td>
+        	<g:trendingRecipes/>
+        </td>
         <td valign="top">
-    <span data-dojo-type="dijit.TitlePane" title="Recipe 1" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" duration="200" open="false" style="min-width: 1em; width: 100%; height: auto;"><div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: 300px; width: 95%;" class="notepad" doLayout="false"></div>
-         </span></td>
+        	<g:improvedRecipes/>
+        </td>
       </tr>
     </tbody>
   </table>

@@ -16,6 +16,13 @@ class StoredRecipeController {
         params.max = Math.min(max ?: 10, 100)
         [storedRecipeInstanceList: StoredRecipe.list(params), storedRecipeInstanceTotal: StoredRecipe.count()]
     }
+	
+	def like(Long id) {
+		def instance = StoredRecipe.get(id)
+		instance.setLikes(instance.getLikes()+1)
+		instance.save()
+		return instance.getLikes()
+	}
 
     def create() {
 		HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)

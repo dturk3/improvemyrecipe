@@ -11,4 +11,7 @@ class StoredRecipe {
 	List<String> tags
 	int likes
 	int dislikes
+	int improvements
+	
+	static hasMany = [history: StoredChangeset, tags: String]
 }
