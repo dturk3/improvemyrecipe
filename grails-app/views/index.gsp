@@ -24,8 +24,9 @@ require([
 </script>
 <style>@import "themes/claro/document.css";@import "themes/claro/claro.css";@import "app.css";
 </style>
-<script type="text/javascript" src="app.js"></script>
-<g:javascript library="jquery"/>
+<!--<script type="text/javascript" src="app.js"></script>-->
+<g:javascript library="jquery" />
+<g:setProvider library="jquery"/>
 <r:layoutResources/>
 </head>
 <body class="claro" data-maq-flow-layout="true" data-maq-comptype="desktop" data-maq-ws="collapse" data-maq-appstates="{}" id="myapp">
@@ -65,8 +66,6 @@ improvemyrecipe.com</a>
     	def recipeService = grailsApplication.classLoader.loadClass('improvemyrecipe.RecipeService').newInstance()
 	%>
     <richui:tagCloud class="tag" values="${recipeService.getTagCloud()}" />
-    <g:remoteLink controller="storedRecipe" action="like" id="5" onSuccess="\$('likes5').value=e.responseText;" onLoading="showSpinner();">Test 1</g:remoteLink>
-  <g:recipeTagCloud/>
     <tbody>
       <tr>
         <th class="notepad-heading">
@@ -90,13 +89,89 @@ improvemyrecipe.com</a>
       </tr>
       <tr>
         <td valign="top">
-   			<g:recentRecipes/>
+        	<g:each in="${recipeService.getStoredRecipes()}">
+	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
+	       			<div id="insetBgd">
+						<h1 class="insetType"><a href="storedRecipe/show/${it.storedRecipe.id}">${it.recipe.title}</a></h1>
+						<h2 class="insetType">${it.recipe.author}</h2>
+						<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>
+					    <h3 class="insetType">${it.recipe.description}</h3>
+						<div class="insetTypeLikes" style="color: #660000">
+							<g:remoteLink style="float:left" class="insetTypeLikes" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
+								D
+							</g:remoteLink>
+							<div class="insetTypeLikes" style="font-family: Rockwell; color: #660000" id="dislikes${it.storedRecipe.id}">
+								${it.storedRecipe.dislikes}
+							</div>
+						</div>
+						<div class="insetTypeLikes">
+							<g:remoteLink style="float:left" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
+								C
+							</g:remoteLink>
+							<div class="insetTypeLikes" style="font-family: Rockwell" id="likes${it.storedRecipe.id}">
+								${it.storedRecipe.likes}
+							</div>
+						</div>
+					</div>
+				</div>
+        	</g:each>
+
 		</td>
         <td valign="top">
-        	<g:trendingRecipes/>
+     		<g:each in="${recipeService.getTrendingRecipes()}">
+	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
+	       			<div id="insetBgd">
+						<h1 class="insetType"><a href="storedRecipe/show/${it.storedRecipe.id}">${it.recipe.title}</a></h1>
+						<h2 class="insetType">${it.recipe.author}</h2>
+						<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>
+					    <h3 class="insetType">${it.recipe.description}</h3>
+						<div class="insetTypeLikes" style="color: #660000">
+							<g:remoteLink style="float:left" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
+								D
+							</g:remoteLink>
+							<div class="insetTypeLikes" style="font-family: Rockwell; color: #660000" id="dislikes${it.storedRecipe.id}">
+								${it.storedRecipe.dislikes}
+							</div>
+						</div>
+						<div class="insetTypeLikes">
+							<g:remoteLink style="float:left" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
+								C
+							</g:remoteLink>
+							<div class="insetTypeLikes" style="font-family: Rockwell" id="likes${it.storedRecipe.id}">
+								${it.storedRecipe.likes}
+							</div>
+						</div>					
+					</div>
+				</div>
+        	</g:each>
         </td>
         <td valign="top">
-        	<g:improvedRecipes/>
+       		<g:each in="${recipeService.getImprovedRecipes()}">
+	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
+	       			<div id="insetBgd">
+						<h1 class="insetType"><a href="storedRecipe/show/${it.storedRecipe.id}">${it.recipe.title}</a></h1>
+						<h2 class="insetType">${it.recipe.author}</h2>
+						<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>
+					    <h3 class="insetType">${it.recipe.description}</h3>
+						<div class="insetTypeLikes" style="color: #660000">
+							<g:remoteLink style="float:left" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
+								D
+							</g:remoteLink>
+							<div class="insetTypeLikes" style="font-family: Rockwell; color: #660000" id="dislikes${it.storedRecipe.id}">
+								${it.storedRecipe.dislikes}
+							</div>
+						</div>
+						<div class="insetTypeLikes">
+							<g:remoteLink style="float:left" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
+								C
+							</g:remoteLink>
+							<div class="insetTypeLikes" style="font-family: Rockwell" id="likes${it.storedRecipe.id}">
+								${it.storedRecipe.likes}
+							</div>
+						</div>				
+					</div>
+				</div>
+        	</g:each>
         </td>
       </tr>
     </tbody>

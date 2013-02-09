@@ -21,7 +21,14 @@ class StoredRecipeController {
 		def instance = StoredRecipe.get(id)
 		instance.setLikes(instance.getLikes()+1)
 		instance.save()
-		return instance.getLikes()
+		render instance.getLikes()
+	}
+	
+	def dislike(Long id) {
+		def instance = StoredRecipe.get(id)
+		instance.setDislikes(instance.getDislikes()+1)
+		instance.save()
+		render instance.getDislikes()
 	}
 
     def create() {
