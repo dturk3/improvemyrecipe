@@ -32,8 +32,8 @@ class StoredRecipeController {
 	}
 
     def create() {
-		HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)
-		recipeService.storeRecipe(hga.generateRecipe())
+		//HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)
+		//recipeService.storeRecipe(hga.generateRecipe())
         [storedRecipeInstance: new StoredRecipe(params)]
     }
 

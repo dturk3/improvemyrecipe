@@ -89,3 +89,11 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+fileuploader {
+	images {
+		maxSize = 500 * 1024 //500 kbytes
+		allowedExtensions = ["jpg","jpeg","gif","png"]
+		path = "repos/"
+	}
+}
