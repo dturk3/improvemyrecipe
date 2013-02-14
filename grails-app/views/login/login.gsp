@@ -237,7 +237,7 @@
 			        </td>
 			        <td valign="top">
     					<div id="stylized" class="myform">
-    						<span class="med"><g:dailyFacts/></span>
+    						<span class="med"><!--<g:dailyFacts/>--></span>
 			       		</div>
 			        </td>
 			      </tr>

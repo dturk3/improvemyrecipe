@@ -191,7 +191,7 @@ Browse</g:link>
 				    Description
 		    		<span class="small">Ex: "Simple and favourite comfort food." (max. 80 characters)</span>
 			    </label> 
-			    <g:textField style="height:50px" name="description"/><br/>
+			    <g:textField style="height:40px" name="description"/><br/>
 	   			<label>
 				    Preparation Time
 		    		<span class="small">Ex: 1 min</span>
@@ -230,11 +230,18 @@ Browse</g:link>
 		    </label> 
 		    <input type="text" name="ing" id="ing" onKeyUp="validateIng(this,event);"/><br/>
 		    <div class="info"><div style="font-family: webdings; font-size: 2.2em; margin-left:-35px; margin-top:-5px; float:left">4</div><div id="ingTip" >Start by typing ingredients quantity...</div></div>
+		    <div name="ingList" id="ingList"></div>
 		</div>
         </td>
         <td valign="top">
      	<div id="stylized" class="myform">
 		 	<p>Instructions to follow</p>
+		 	<label>
+			    Add an instruction
+	    		<span class="small">Ex: "Simmer on low heat for 5 minutes."</span>
+		    </label> 
+		    <input type="text" name="inst" id="inst"/><br/>
+		    <div name="instList" id=""></div>
 		</div>
         </td>
       </tr>

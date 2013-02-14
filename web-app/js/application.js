@@ -55,10 +55,52 @@ function validateIng(obj,evt) {
 	}
 	tip.innerHTML="Next, enter the unit of measurement of the ingredient...";
 	
-	if(val.indexOf(' ')==-1) {
+	if(document.getElementById('ing').value.indexOf(' ')==-1) {
 		return;
 	}
 	complete(document.getElementById('ing'),evt, units);
+	
+	//if(document.getElementById('ing').value.match(/[\d\.]+ .+$/g)) {
+	//	return;
+	//}
+	
+	if(document.getElementById('ing').value.match(/[\d\.]+ .+ .+$/g)) {
+		tip.innerHTML="When you are ready to add this ingredient, hit ENTER!";
+		checkSubmit();
+	}
+	if(document.getElementById('ing').value.match(/[\d\.]+ .+ $/g)) {
+		tip.innerHTML="Example ingredient format: '2 tbsp sugar'";
+	}
+}
+
+function randomString(length) {
+    var chars = '0123456789abcdefghiklmnopqrstuvwxyz'.split('');
+
+    if (! length) {
+        length = Math.floor(Math.random() * chars.length);
+    }
+
+    var str = '';
+    for (var i = 0; i < length; i++) {
+        str += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return str;
+}
+
+function removeDiv(id)
+{
+	var div = document.getElementById(id);
+	div.parentNode.removeChild(div);
+}
+
+function checkSubmit()
+{
+    if (window.event.keyCode == 13)
+    {
+    	var ingId = randomString(5);
+    	document.getElementById('ingList').innerHTML = document.getElementById('ingList').innerHTML + '<li style="size: 4em" id="'+ ingId + '">' + document.getElementById('ing').value + '<a style="float:right" href="#" onclick="removeDiv(\'' + ingId + '\')">[X]</a></li>';
+    	document.getElementById('ing').value = "";
+    }
 }
 
 function complete(obj, evt, units) {
@@ -114,22 +156,39 @@ function complete(obj, evt, units) {
 	}
 	var textbox = document.getElementById('ing');
 	var sel = textbox.value.substr(textbox.selectionStart,textbox.selectionEnd-textbox.selectionStart);
-	
 	var tip = document.getElementById('ingTip');
-	if(sel=="") {
+	if(sel.length == 0) {
 		if(contains(units, textbox.value)) {
 			tip.innerHTML="Next, enter the name of the ingredient...";
+			return;
 		}
 		tip.innerHTML="You are not specifying a valid ingredient measurement unit. The valid list is as follows: " + units;
+		return;
 	}
+	tip.innerHTML="Next, enter the name of the ingredient...";
 }
 
 function contains(array,value)
 {
 	for (index = 0; index < array.length; ++index) {
-		if(value.contains(array[index])) {
+		if(value.indexOf(array[index])!=-1) {
 			return true;
 		}
 	}	
 	return false;
+}
+
+function occurrences(string, subString, allowOverlapping){
+
+    string+=""; subString+="";
+    if(subString.length<=0) return string.length+1;
+
+    var n=0, pos=0;
+    var step=(allowOverlapping)?(1):(subString.length);
+
+    while(true){
+        pos=string.indexOf(subString,pos);
+        if(pos>=0){ n++; pos+=step; } else break;
+    }
+    return(n);
 }
