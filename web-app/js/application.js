@@ -8,6 +8,10 @@ if (typeof jQuery !== 'undefined') {
 	})(jQuery);
 }
 
+function validateInst(obj,evt) {
+	checkInstSubmit();
+}
+
 function validateIng(obj,evt) {
 	var units = new Array( 
 	     		"ml",
@@ -87,9 +91,34 @@ function randomString(length) {
     return str;
 }
 
-function removeDiv(id)
+function removeItem(str,sub)
+{
+	var ss = sub+"|";
+	var result = str.substring(0,str.indexOf(ss)-1) + str.substring(str.indexOf(ss)-1+ss.length,str.length-1);
+	return result;
+}
+
+function removeDiv(id,mode)
 {
 	var div = document.getElementById(id);
+	var removedValue;
+	while (div.firstChild) {
+		if(div.firstChild.innerHTML === undefined)
+		{
+			removedValue = div.firstChild;
+		}
+		div.removeChild(div.firstChild);
+	}
+	removedValue = removedValue.wholeText;
+
+	if( mode == 0 )
+	{
+		document.getElementById('ings').value = removeItem(document.getElementById('ings').value,removedValue);
+	}
+	else
+	{
+		document.getElementById('insts').value = removeItem(document.getElementById('insts').value,removedValue);
+	}
 	div.parentNode.removeChild(div);
 }
 
@@ -97,9 +126,21 @@ function checkSubmit()
 {
     if (window.event.keyCode == 13)
     {
-    	var ingId = randomString(5);
-    	document.getElementById('ingList').innerHTML = document.getElementById('ingList').innerHTML + '<li style="size: 4em" id="'+ ingId + '">' + document.getElementById('ing').value + '<a style="float:right" href="#" onclick="removeDiv(\'' + ingId + '\')">[X]</a></li>';
-    	document.getElementById('ing').value = "";
+		var ingId = randomString(5);
+		document.getElementById('ingList').innerHTML = document.getElementById('ingList').innerHTML + '<li style="size: 4em" id="'+ ingId + '">' + document.getElementById('ing').value + '<a style="float:right" href="#" onclick="removeDiv(\'' + ingId + '\',0)">[X]</a></li>';
+		document.getElementById('ings').value = document.getElementById('ings').value + '|' + document.getElementById('ing').value + '|';
+		document.getElementById('ing').value = "";
+    }
+}
+
+function checkInstSubmit()
+{
+    if (window.event.keyCode == 13)
+    {
+		var instId = randomString(5);
+		document.getElementById('instList').innerHTML = document.getElementById('instList').innerHTML + '<li style="size: 4em" id="'+ instId + '">' + document.getElementById('inst').value + '<a style="float:right" href="#" onclick="removeDiv(\'' + instId + '\',1)">[X]</a></li>';
+		document.getElementById('insts').value = document.getElementById('insts').value + '|' + document.getElementById('inst').value + '|';
+		document.getElementById('inst').value = "";
     }
 }
 

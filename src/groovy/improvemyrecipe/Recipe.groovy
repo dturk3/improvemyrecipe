@@ -17,7 +17,7 @@ class Recipe {
 		created = new Date()
 	}
 	
-	Recipe(String ttl, String auth, List tgs, String desc, List ing, List inst, Time prp, Time ck, ServingRange srv ) {
+	Recipe(String ttl, String auth, List<String> tgs, String desc, List<Ingredient> ing, List<InstructionStep> inst, Time prp, Time ck, ServingRange srv ) {
 		title=ttl
 		author=auth
 		tags=tgs

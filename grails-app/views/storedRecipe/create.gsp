@@ -176,7 +176,7 @@ Browse</g:link>
         <td valign="top">
 		<div id="stylized" class="myform">
 			<p>General recipe parameters</p>
-			<g:form>
+			<g:form controller="storedRecipe" action="save" params="[ings: ingList]">
 				<label>
 				    Title
 		    		<span class="small">Ex: "Grilled Cheese in Butter"</span>
@@ -213,6 +213,8 @@ Browse</g:link>
 				    Upload Image
 		    		<span class="small">Optional max. 500 KB</span>
 		    </label> 
+			<g:hiddenField name="ings" id="ings"/>
+			<g:hiddenField name="insts" id= "insts"/>
 			<fileuploader:form	upload="images" 
 				successAction="show"
 				successController="storedRecipe"
@@ -240,8 +242,9 @@ Browse</g:link>
 			    Add an instruction
 	    		<span class="small">Ex: "Simmer on low heat for 5 minutes."</span>
 		    </label> 
-		    <input type="text" name="inst" id="inst"/><br/>
-		    <div name="instList" id=""></div>
+		    <input type="text" name="inst" id="inst" onKeyUp="validateInst(this,event);"/><br/>
+   		    <div class="info"><div style="font-family: webdings; font-size: 2.2em; margin-left:-35px; margin-top:-5px; float:left">4</div><div id="instTip" >Type a cooking instruction and hit ENTER to add it to the list.</div></div>
+		    <ol name="instList" id="instList"></ol>
 		</div>
         </td>
       </tr>

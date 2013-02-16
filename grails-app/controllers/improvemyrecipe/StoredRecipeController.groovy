@@ -7,6 +7,7 @@ class StoredRecipeController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	
 	def recipeService
+	def authenticationService
 
     def index() {
         redirect(action: "list", params: params)
@@ -32,13 +33,63 @@ class StoredRecipeController {
 	}
 
     def create() {
-		//HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)
-		//recipeService.storeRecipe(hga.generateRecipe())
         [storedRecipeInstance: new StoredRecipe(params)]
     }
 
     def save() {
-        def storedRecipeInstance = new StoredRecipe(params)
+		println params
+		Time prepTime = new Time()
+		prepTime.quantity = Integer.valueOf(params.prepTime)
+		prepTime.time = TimeUnit.valueOf(params.prepTimeUnit)
+		Time cookTime = new Time()
+		cookTime.quantity = Integer.valueOf(params.cookTime)
+		cookTime.time = TimeUnit.valueOf(params.cookTimeUnit)
+		int minS, maxS
+		if( params.servings.contains('-') )
+		{
+			minS=Integer.valueOf(params.servings.split('-')[0])
+			maxS=Integer.valueOf(params.servings.split('-')[1])
+		}
+		else
+		{
+			minS=Integer.valueOf(params.servings)
+			maxS=minS
+		}
+		ServingRange srv = new ServingRange()
+		srv.min = minS
+		srv.max = maxS
+		//TODO The ings is a list for some reason - figure out why, for now use known index
+		List<String> ingListString = params.ings[1].split('\\|') as List
+		List<Ingredient> ingList = []
+		ingListString.each { String ingEntry ->
+			if( ingEntry == null || ingEntry.equals('') || ingEntry.equals('\\|') ) {
+				return
+			}
+			List<String> decomposedIng = ingEntry.split(' ') as List
+			Ingredient i = new Ingredient()
+			i.quantity = Double.valueOf(decomposedIng[0])
+			i.unit = QuantityUnit.valueOf(decomposedIng[1])
+			i.name = decomposedIng[2..decomposedIng.size()-1].join(' ')
+			ingList << i
+		}
+		
+		List<String> instListString = params.insts.split('\\|') as List
+		List<InstructionStep> instList = []
+		instListString.each { String instEntry ->
+			if( instEntry == null || instEntry.equals('') || instEntry.equals('\\|') ) {
+				return
+			}
+			InstructionStep i = new InstructionStep()
+			i.instruction = instEntry
+			instList << i
+		}
+		
+		Recipe r = new Recipe(params.title, authenticationService.getUserPrincipal().login, params.tags.split(',') as List, params.description, ingList, instList, prepTime, cookTime, srv )
+		println r
+		HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)
+		StoredRecipe sr = recipeService.storeRecipe(r)
+        def storedRecipeInstance = sr
+		println sr
         if (!storedRecipeInstance.save(flush: true)) {
             render(view: "create", model: [storedRecipeInstance: storedRecipeInstance])
             return
