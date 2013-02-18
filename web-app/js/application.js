@@ -98,6 +98,14 @@ function removeItem(str,sub)
 	return result;
 }
 
+function replaceItem(str,sub, subNew)
+{
+	var ss = sub+"|";
+	var result = str.substring(0,str.indexOf(ss)-1) + subNew + "|" + str.substring(str.indexOf(ss)-1+ss.length,str.length-1);
+	return result;
+}
+
+
 function removeDiv(id,mode)
 {
 	var div = document.getElementById(id);
@@ -122,15 +130,55 @@ function removeDiv(id,mode)
 	div.parentNode.removeChild(div);
 }
 
+function editDiv(id)
+{
+	var div = document.getElementById(id);
+	var lineValue;
+	while (div.firstChild) {
+		if(div.firstChild.innerHTML === undefined)
+		{
+			lineValue = div.firstChild;
+		}
+		div.removeChild(div.firstChild);
+	}
+	lineValue = lineValue.wholeText;
+	
+	var editBox = document.createElement('input');
+	editBox.setAttribute('id', 'edit'+id);
+	editBox.setAttribute('value', lineValue);
+	editBox.setAttribute('onkeyup', 'checkEdit("' + id + '")');
+	div.appendChild(editBox);
+	
+}
+
 function checkSubmit()
 {
     if (window.event.keyCode == 13)
     {
 		var ingId = randomString(5);
-		document.getElementById('ingList').innerHTML = document.getElementById('ingList').innerHTML + '<li style="size: 4em" id="'+ ingId + '">' + document.getElementById('ing').value + '<a style="float:right" href="#" onclick="removeDiv(\'' + ingId + '\',0)">[X]</a></li>';
+		document.getElementById('ingList').innerHTML = document.getElementById('ingList').innerHTML + '<li style="size: 4em" id="'+ ingId + '">' + '<a style="float:right" href="#" onclick="removeDiv(\'' + ingId + '\',0)">[x]</a>' + document.getElementById('ing').value + '<a style="float:right" href="#" onclick="editDiv(\'' + ingId + '\')">[edit]</a></li>';
 		document.getElementById('ings').value = document.getElementById('ings').value + '|' + document.getElementById('ing').value + '|';
 		document.getElementById('ing').value = "";
     }
+}
+
+function checkEdit(ingId)
+{
+    if (window.event.keyCode == 13)
+    {
+    	var div = document.getElementById(ingId);
+    	var editBox = document.getElementById('edit'+ingId);
+		div.innerHTML = editBox.value + '<a style="float:right" href="#" onclick="removeDiv(\'' + ingId + '\',0)">[x]</a><a style="float:right" href="#" onclick="editDiv(\'' + ingId + '\')">[edit]</a>';
+		//editBox.parentNode.removeChild(editBox);
+		//TODO: edit value in hidden field
+		//document.getElementById('ings').value = document.getElementById('ings').value + '|' + document.getElementById('ing').value + '|';
+    }
+}
+
+function replaceView(csetId)
+{
+	var div = document.getElementById('recipeView');
+	div.innerHTML = "<p>" + document.getElementById('cset' + csetId).innerHTML + "</p>";
 }
 
 function checkInstSubmit()
@@ -138,7 +186,7 @@ function checkInstSubmit()
     if (window.event.keyCode == 13)
     {
 		var instId = randomString(5);
-		document.getElementById('instList').innerHTML = document.getElementById('instList').innerHTML + '<li style="size: 4em" id="'+ instId + '">' + document.getElementById('inst').value + '<a style="float:right" href="#" onclick="removeDiv(\'' + instId + '\',1)">[X]</a></li>';
+		document.getElementById('instList').innerHTML = document.getElementById('instList').innerHTML + '<li style="size: 4em" id="'+ instId + '">' + document.getElementById('inst').value + '<a style="float:right" href="#" onclick="removeDiv(\'' + instId + '\',1)">[x]</a><a style="float:right" href="#" onclick="editDiv(\'' + instId + '\')">[edit]</a></li>';
 		document.getElementById('insts').value = document.getElementById('insts').value + '|' + document.getElementById('inst').value + '|';
 		document.getElementById('inst').value = "";
     }

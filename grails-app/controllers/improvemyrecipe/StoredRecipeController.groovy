@@ -18,6 +18,24 @@ class StoredRecipeController {
         [storedRecipeInstanceList: StoredRecipe.list(params), storedRecipeInstanceTotal: StoredRecipe.count()]
     }
 	
+	def comment(Long id, String comment) {
+		if( comment == null || comment.equals("") ) {
+		}
+		else {
+			def instance = StoredRecipe.get(id)
+					Comment c = Comment.create()
+					c.timestamp = new Date()
+			c.user = authenticationService.getUserPrincipal().login
+			c.comment = comment
+			c.save()
+			instance.comments = instance.comments.reverse()
+			instance.comments.add(c)
+			instance.comments = instance.comments.reverse()
+			instance.save()
+		}
+		redirect(action: "show", id: id)
+	}
+	
 	def like(Long id) {
 		def instance = StoredRecipe.get(id)
 		instance.setLikes(instance.getLikes()+1)
@@ -35,14 +53,77 @@ class StoredRecipeController {
     def create() {
         [storedRecipeInstance: new StoredRecipe(params)]
     }
+	
+	def improve() {
+		println params
+		Time prepTime = new Time()
+		prepTime.quantity = Double.valueOf(params.prepTime)
+		prepTime.time = TimeUnit.valueOf(params.prepTimeUnit)
+		Time cookTime = new Time()
+		cookTime.quantity = Double.valueOf(params.cookTime)
+		cookTime.time = TimeUnit.valueOf(params.cookTimeUnit)
+		int minS, maxS
+		if( params.servings.contains('-') )
+		{
+			minS=Integer.valueOf(params.servings.split('-')[0])
+			maxS=Integer.valueOf(params.servings.split('-')[1])
+		}
+		else
+		{
+			minS=Integer.valueOf(params.servings)
+			maxS=minS
+		}
+		ServingRange srv = new ServingRange()
+		srv.min = minS
+		srv.max = maxS
+		//TODO The ings is a list for some reason - figure out why, for now use known index
+		List<String> ingListString = params.ings[1].split('\\|') as List
+		List<Ingredient> ingList = []
+		ingListString.each { String ingEntry ->
+			if( ingEntry == null || ingEntry.equals('') || ingEntry.equals('\\|') ) {
+				return
+			}
+			List<String> decomposedIng = ingEntry.split(' ') as List
+			Ingredient i = new Ingredient()
+			i.quantity = Double.valueOf(decomposedIng[0])
+			i.unit = QuantityUnit.valueOf(decomposedIng[1])
+			i.name = decomposedIng[2..decomposedIng.size()-1].join(' ')
+			ingList << i
+		}
+		
+		List<String> instListString = params.insts.split('\\|') as List
+		List<InstructionStep> instList = []
+		instListString.each { String instEntry ->
+			if( instEntry == null || instEntry.equals('') || instEntry.equals('\\|') ) {
+				return
+			}
+			InstructionStep i = new InstructionStep()
+			i.instruction = instEntry
+			instList << i
+		}
+		
+		Recipe r = new Recipe(params.title, authenticationService.getUserPrincipal().login, params.tags.split(',') as List, params.description, ingList, instList, prepTime, cookTime, srv )
+		println r
+		HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)
+		StoredRecipe sr = recipeService.improveRecipe(r,UUID.fromString(new StoredRecipe().get(params.id).uid),Long.valueOf(params.id))
+		def storedRecipeInstance = sr
+		println sr
+		if (!storedRecipeInstance.save(flush: true)) {
+			render(view: "create", model: [storedRecipeInstance: storedRecipeInstance])
+			return
+		}
+
+		flash.message = message(code: 'default.created.message', args: [message(code: 'storedRecipe.label', default: 'StoredRecipe'), storedRecipeInstance.id])
+		redirect(action: "show", id: storedRecipeInstance.id)
+	}
 
     def save() {
 		println params
 		Time prepTime = new Time()
-		prepTime.quantity = Integer.valueOf(params.prepTime)
+		prepTime.quantity = Double.valueOf(params.prepTime)
 		prepTime.time = TimeUnit.valueOf(params.prepTimeUnit)
 		Time cookTime = new Time()
-		cookTime.quantity = Integer.valueOf(params.cookTime)
+		cookTime.quantity = Double.valueOf(params.cookTime)
 		cookTime.time = TimeUnit.valueOf(params.cookTimeUnit)
 		int minS, maxS
 		if( params.servings.contains('-') )
@@ -101,12 +182,16 @@ class StoredRecipeController {
 
     def show(Long id) {
         def storedRecipeInstance = StoredRecipe.get(id)
+		storedRecipeInstance.views = storedRecipeInstance.views + 1
+		storedRecipeInstance.save()
         if (!storedRecipeInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'storedRecipe.label', default: 'StoredRecipe'), id])
             redirect(action: "list")
             return
         }
-
+		
+		println recipeService.getRecipe(storedRecipeInstance)
+		
         [storedRecipeInstance: storedRecipeInstance]
     }
 

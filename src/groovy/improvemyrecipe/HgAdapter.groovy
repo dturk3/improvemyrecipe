@@ -74,7 +74,7 @@ class HgAdapter {
 	}
 	
 	def improveRecipe( Recipe r, UUID id ) {
-		Yaml y = new Yaml()
+		Yaml y = new Yaml(new NonMetaClassRepresenter())
 		String filename = "${basePath}${File.separator}${id}.yaml"
 		y.dump(r, new FileWriter(new File(filename)))
 		CommitCommand ci = CommitCommand.on(repo)
@@ -84,6 +84,13 @@ class HgAdapter {
 		if(!ci.isSuccessful())
 		{
 			throw new HgException("Failed to commit recipe improvement")
+		}
+		new NewRecipeResponse().with {
+			uid = id
+			fname = filename
+			cset = c
+			searchTags = r.tags
+			it
 		}
 	}
 	

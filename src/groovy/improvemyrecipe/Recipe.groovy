@@ -33,7 +33,7 @@ class Recipe {
 	def String toString() {
 		String ing = ""
 		String inst = ""
-		ingredients.each{ ing+="  ${it.toString()}\n" }
+		ingredients.each{ ing+="  ${FuzzyQuantityConverter.toFuzzy(it.quantity)} ${it.unit} ${it.name}\n" }
 		instructions.each{ inst+="  ${instructions.indexOf(it)+1}. ${it.instruction}\n" }
 """
 ${title} - ${author}
@@ -44,6 +44,33 @@ ${ing}
 ${inst}
 
 Prep time: ${prep}
+Cook time: ${cook}
+"""
+	}
+	
+	def String toHtml() {
+		String ing = ""
+		String inst = ""
+		ingredients.each{ ing+="<li>${FuzzyQuantityConverter.toFuzzy(it.quantity)} ${it.unit} ${it.name}</li>\n" }
+		instructions.each{ inst+="<li>${instructions.indexOf(it)+1}. ${it.instruction}</li>\n" }
+"""
+<strong>${title}</strong> 
+<div class="subtitle">${author}</div>
+<br/>
+${description}
+<div class="subtitle">TAGS: ${tags}</div>
+
+<ul>
+${ing}
+</ul>
+
+<ol>
+${inst}
+</ol>
+
+<br/>
+Prep time: ${prep}
+<br/>
 Cook time: ${cook}
 """
 	}
