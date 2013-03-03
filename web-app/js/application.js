@@ -162,16 +162,21 @@ function checkSubmit()
     }
 }
 
-function checkEdit(ingId)
+function checkEdit(ingId,mode)
 {
     if (window.event.keyCode == 13)
     {
     	var div = document.getElementById(ingId);
     	var editBox = document.getElementById('edit'+ingId);
+		if( mode == 0 )
+		{
+			document.getElementById('ings').value = replaceItem(document.getElementById('ings').value,div.firstChild.whoteText,editBox.value);
+		}
+		else
+		{
+			document.getElementById('insts').value = replaceItem(document.getElementById('insts').value,div.firstChild.whoteText,editBox.value);
+		}
 		div.innerHTML = editBox.value + '<a style="float:right" href="#" onclick="removeDiv(\'' + ingId + '\',0)">[x]</a><a style="float:right" href="#" onclick="editDiv(\'' + ingId + '\')">[edit]</a>';
-		//editBox.parentNode.removeChild(editBox);
-		//TODO: edit value in hidden field
-		//document.getElementById('ings').value = document.getElementById('ings').value + '|' + document.getElementById('ing').value + '|';
     }
 }
 

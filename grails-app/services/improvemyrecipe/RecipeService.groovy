@@ -65,6 +65,25 @@ class RecipeService {
 		tagMap
 	}
 	
+	def List<RecipePair> search( String str ) {
+		List<String> strings = str.split("\\s") as List<String>
+		List<String> trimmedStrings = strings.collect{ 
+			String it ->
+			it.trim()
+		}
+		List<RecipePair> result = []
+		HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)
+		trimmedStrings.each {
+			//List<StoredRecipe> byTag = StoredRecipe.executeQuery("from StoredRecipe r where string(r.tags) like lower('%${it}%') order by r.changeset.created desc limit 1000")
+			List<StoredRecipe> byTitle = StoredRecipe.executeQuery("from StoredRecipe r where lower(r.title) like lower('%${it}%') order by r.changeset.created desc limit 100")
+			List<StoredRecipe> byDesc = StoredRecipe.executeQuery("from StoredRecipe r where lower(r.description) like lower('%${it}%') order by r.changeset.created desc limit 100")
+			//result.addAll(collectRecipes(byTag, hga))
+			result.addAll(collectRecipes(byTitle, hga))
+			result.addAll(collectRecipes(byDesc, hga))
+		}
+		result.unique()
+	}
+	
 	def getHistory( StoredRecipe r )
 	{
 		HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)
@@ -91,6 +110,8 @@ class RecipeService {
 		sc.setCreated(rsp.cset.timestamp.date)
 		sc.setCreator(rsp.cset.user)
 		sc.save()
+		sr.setTitle(r.title)
+		sr.setDescription(r.description)
 		sr.setChangeset(sc)
 		sr.setHistory([sc])
 		sr.setTags(rsp.searchTags)
@@ -111,6 +132,8 @@ class RecipeService {
 		sc.setCreated(rsp.cset.timestamp.date)
 		sc.setCreator(rsp.cset.user)
 		sc.save()
+		sr.setTitle(r.title)
+		sr.setDescription(r.description)
 		sr.setChangeset(sc)
 		sr.history.add(sc)
 		sr.setTags(rsp.searchTags)

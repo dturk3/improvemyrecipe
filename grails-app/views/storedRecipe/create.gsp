@@ -142,6 +142,11 @@ Browse</g:link>
 		</g:link>
 	</div>
 </g:if>
+<div style="float: right; height: 30%; margin-right: 30px;" class="titlestyle">
+<g:form controller="storedRecipe" action="search">
+	<input id="liveSearch" name="liveSearch" height="20px" style="color: black; margin-top: -10px; width: 150px; background-color: rgb(136, 184, 151);"/>
+</g:form>
+</div>
 </div>
  <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="center" splitter="false" maxSize="Infinity" doLayout="false">
   <table border="0" style="border-collapse: collapse; table-layout: fixed; width: 100%; height: 494px;">
@@ -150,7 +155,9 @@ Browse</g:link>
       <col></col>
       <col></col>
     </colgroup>
-    <richui:tagCloud class="tag" values="${recipeService.getTagCloud()}" />
+  	<div class="tagCloud">
+   		<richui:tagCloud class="tag" values="${recipeService.getTagCloud()}" />
+	</div>
     <tbody>
       <tr>
         <th class="notepad-heading">

@@ -116,9 +116,12 @@ class StoredRecipeController {
 		flash.message = message(code: 'default.created.message', args: [message(code: 'storedRecipe.label', default: 'StoredRecipe'), storedRecipeInstance.id])
 		redirect(action: "show", id: storedRecipeInstance.id)
 	}
+	
+	def search() {
+		redirect(action: "list", params: params)
+	}
 
     def save() {
-		println params
 		Time prepTime = new Time()
 		prepTime.quantity = Double.valueOf(params.prepTime)
 		prepTime.time = TimeUnit.valueOf(params.prepTimeUnit)

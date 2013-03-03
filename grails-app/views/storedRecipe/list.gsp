@@ -69,6 +69,11 @@ Browse</g:link>
 		</g:link>
 	</div>
 </g:if>
+<div style="float: right; height: 30%; margin-right: 30px;" class="titlestyle">
+<g:form controller="storedRecipe" action="search">
+	<input id="liveSearch" name="liveSearch" height="20px" style="color: black; margin-top: -10px; width: 150px; background-color: rgb(136, 184, 151);"/>
+</g:form>
+</div>
 </div>
  <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="center" splitter="false" maxSize="Infinity" doLayout="false">
   <table border="0" style="border-collapse: collapse; table-layout: fixed; width: 100%; height: 494px;">
@@ -77,37 +82,115 @@ Browse</g:link>
       <col></col>
       <col></col>
     </colgroup>
-    <richui:tagCloud class="tag" values="${recipeService.getTagCloud()}" />
+  	<div class="tagCloud">
+   		<richui:tagCloud class="tag" values="${recipeService.getTagCloud()}" />
+	</div>
     <tbody>
       <tr>
         <th class="notepad-heading">
           <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
-            Basic Information</h1>
+            Search Results</h1>
           <h1 style="font-family: webdings; font-size: 2.2em; top: -10px;">
             ä</h1>
         </th>
         <th class="notepad-heading">
-    <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
-            Ingredient List</h1>
-    <h1 style="font-family: webdings; font-size: 2.2em; float: none;">
-      %</h1>
+
         </th>
         <th class="notepad-heading">
-    <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
-            Cooking Instructions</h1>
-    <h1 style="font-family: webdings; font-size: 2.2em; float: none;">
-      `</h1>
+
         </th>
       </tr>
       <tr>
+      	<g:set var="results" value="${recipeService.search(params.liveSearch)}" />
         <td valign="top">
-
+        	<g:if test="${!results.isEmpty()}">
+				<g:each in="${results[0..(results.size()/3)]}">
+		        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
+		       			<div id="insetBgd">
+							<h1 class="insetType"><a href="show/${it.storedRecipe.id}">${it.recipe.title}</a></h1>
+							<h2 class="insetType">${it.recipe.author}</h2>
+							<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>
+						    <h3 class="insetType">${it.recipe.description}</h3>
+							<div class="insetTypeLikes" style="color: #660000">
+								<g:remoteLink style="float:left" class="insetTypeLikes" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
+									D
+								</g:remoteLink>
+								<div class="insetTypeLikes" style="font-family: Rockwell; color: #660000" id="dislikes${it.storedRecipe.id}">
+									${it.storedRecipe.dislikes}
+								</div>
+							</div>
+							<div class="insetTypeLikes">
+								<g:remoteLink style="float:left" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
+									C
+								</g:remoteLink>
+								<div class="insetTypeLikes" style="font-family: Rockwell" id="likes${it.storedRecipe.id}">
+									${it.storedRecipe.likes}
+								</div>
+							</div>
+						</div>
+					</div>
+	        	</g:each>
+        	</g:if>
 		</td>
         <td valign="top">
-
+			<g:if test="${results.size()>1}">
+				<g:each in="${results[(results.size()/3)+1..2*(results.size()/3)]}">
+		        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
+		       			<div id="insetBgd">
+							<h1 class="insetType"><a href="show/${it.storedRecipe.id}">${it.recipe.title}</a></h1>
+							<h2 class="insetType">${it.recipe.author}</h2>
+							<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>
+						    <h3 class="insetType">${it.recipe.description}</h3>
+							<div class="insetTypeLikes" style="color: #660000">
+								<g:remoteLink style="float:left" class="insetTypeLikes" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
+									D
+								</g:remoteLink>
+								<div class="insetTypeLikes" style="font-family: Rockwell; color: #660000" id="dislikes${it.storedRecipe.id}">
+									${it.storedRecipe.dislikes}
+								</div>
+							</div>
+							<div class="insetTypeLikes">
+								<g:remoteLink style="float:left" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
+									C
+								</g:remoteLink>
+								<div class="insetTypeLikes" style="font-family: Rockwell" id="likes${it.storedRecipe.id}">
+									${it.storedRecipe.likes}
+								</div>
+							</div>
+						</div>
+					</div>
+	        	</g:each>
+        	</g:if>
         </td>
         <td valign="top">
-       		
+       		<g:if test="${results.size()>2}">
+				<g:each in="${results[2*(results.size()/3)+1..results.size()-1]}">
+		        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
+		       			<div id="insetBgd">
+							<h1 class="insetType"><a href="show/${it.storedRecipe.id}">${it.recipe.title}</a></h1>
+							<h2 class="insetType">${it.recipe.author}</h2>
+							<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>
+						    <h3 class="insetType">${it.recipe.description}</h3>
+							<div class="insetTypeLikes" style="color: #660000">
+								<g:remoteLink style="float:left" class="insetTypeLikes" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
+									D
+								</g:remoteLink>
+								<div class="insetTypeLikes" style="font-family: Rockwell; color: #660000" id="dislikes${it.storedRecipe.id}">
+									${it.storedRecipe.dislikes}
+								</div>
+							</div>
+							<div class="insetTypeLikes">
+								<g:remoteLink style="float:left" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
+									C
+								</g:remoteLink>
+								<div class="insetTypeLikes" style="font-family: Rockwell" id="likes${it.storedRecipe.id}">
+									${it.storedRecipe.likes}
+								</div>
+							</div>
+						</div>
+					</div>
+	        	</g:each>
+        	</g:if>
         </td>
       </tr>
     </tbody>

@@ -6,6 +6,8 @@ class StoredRecipe {
     }
 	
 	String uid
+	String title
+	String description
 	StoredChangeset changeset
 	List<StoredChangeset> history
 	List<String> tags
