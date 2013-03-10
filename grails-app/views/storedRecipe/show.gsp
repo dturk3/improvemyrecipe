@@ -122,7 +122,7 @@ improvemyrecipe.com</a>
 About</a>
 </div>
 <div style="float: right; height: 30%; margin-right: 30px;" class="titlestyle">
-<g:link class="titlestyle" style="text-decoration: none;" controller="StoredRecipe" action="list">
+<g:link class="titlestyle" style="text-decoration: none;" url="/improvemyrecipe">
 Browse</g:link>
 </div>
 <g:if test="${!authService.isLoggedIn(request)}" >
@@ -144,6 +144,11 @@ Browse</g:link>
 		</g:link>
 	</div>
 </g:if>
+<div style="float: right; height: 30%; margin-right: 30px;" class="titlestyle">
+<g:form controller="storedRecipe" action="search">
+	<input id="liveSearch" name="liveSearch" height="20px" style="color: black; margin-top: -10px; width: 150px; background-color: rgb(136, 184, 151);"/>
+</g:form>
+</div>
 </div>
  <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="center" splitter="false" maxSize="Infinity" doLayout="false">
   <table border="0" style="border-collapse: collapse; table-layout: fixed; width: 100%; height: 494px;">
@@ -152,8 +157,14 @@ Browse</g:link>
       <col></col>
       <col></col>
     </colgroup>
-  	<div class="tagCloud">
+  	<div style="float:left" class="tagCloud">
+  		<div class="tagCloudTitle">POPULAR NOW</div>
    		<richui:tagCloud class="tag" values="${recipeService.getTagCloud()}" />
+	</div>
+	<div style="float:right" class="announcementBox">
+		<div class="tagCloudTitle">ANNOUNCEMENTS</div>
+		<h1>improvemyrecipe.com</h1>
+		<p>Welcome to the launch of improvemyrecipe.com! We are still working on certain aspects of our site, please be patient over the coming weeks as we finalize our layout and features. In the meantime, feel free to register, contribute your recipes and browse.</p>
 	</div>
     <tbody>
       <tr>

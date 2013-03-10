@@ -100,7 +100,7 @@ class RecipeService {
 		plist
 	}
 	
-	def storeRecipe( Recipe r ) {
+	def storeRecipe( Recipe r, String fileId ) {
 		HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)
 		NewRecipeResponse rsp = hga.newRecipe(r)
 		StoredRecipe sr = new StoredRecipe().create()
@@ -119,6 +119,7 @@ class RecipeService {
 		sr.setDislikes(0)
 		sr.setImprovements(0)
 		sr.setComments([])
+		sr.setImageId(Integer.valueOf(fileId))
 		sr.save()
 		sr
 	}

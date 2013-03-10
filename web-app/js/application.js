@@ -91,6 +91,50 @@ function randomString(length) {
     return str;
 }
 
+// Called on edit or removal after modifying the actual dom element
+function removeAndRebuildList(id,mode)
+{
+	var outerDiv = removeDiv(id,mode);
+	var rebuiltValue="|";
+	for (var itemi=0;itemi<outerDiv.childNodes.length;itemi++) {
+		var item = ul.childNodes[itemi];
+		if (item.nodeName == "LI") {
+			rebuiltValue+=item.wholeText+"|"
+		}
+	}
+	if(mode==0) {
+		document.getElementById('ings').value = rebuiltValue;
+	}
+	else {
+		document.getElementById('insts').value = rebuiltValue;
+	}
+}
+
+function rebuildList(id,mode)
+{
+	if( mode==0 )
+	{
+		var outerDiv = document.getElementById("ingList");
+	}
+	else
+	{
+		var outerDiv = document.getElementById("instList");
+	}
+	var rebuiltValue="|";
+	for (var itemi=0;itemi<outerDiv.childNodes.length;itemi++) {
+		var item = outerDiv.childNodes[itemi];
+		if (item.nodeName == "LI") {
+			rebuiltValue+=item.wholeText+"|"
+		}
+	}
+	if(mode==0) {
+		document.getElementById('ings').value = rebuiltValue;
+	}
+	else {
+		document.getElementById('insts').value = rebuiltValue;
+	}
+}
+
 function removeItem(str,sub)
 {
 	var ss = sub+"|";
@@ -109,6 +153,7 @@ function replaceItem(str,sub, subNew)
 function removeDiv(id,mode)
 {
 	var div = document.getElementById(id);
+	var outerNode = div.parentNode;
 	var removedValue;
 	while (div.firstChild) {
 		if(div.firstChild.innerHTML === undefined)
@@ -128,9 +173,10 @@ function removeDiv(id,mode)
 		document.getElementById('insts').value = removeItem(document.getElementById('insts').value,removedValue);
 	}
 	div.parentNode.removeChild(div);
+	return outerNode;
 }
 
-function editDiv(id)
+function editDiv(id,mode)
 {
 	var div = document.getElementById(id);
 	var lineValue;
@@ -146,7 +192,7 @@ function editDiv(id)
 	var editBox = document.createElement('input');
 	editBox.setAttribute('id', 'edit'+id);
 	editBox.setAttribute('value', lineValue);
-	editBox.setAttribute('onkeyup', 'checkEdit("' + id + '")');
+	editBox.setAttribute('onkeyup', 'checkEdit("' + id + '",' + mode + ')');
 	div.appendChild(editBox);
 	
 }
@@ -156,7 +202,7 @@ function checkSubmit()
     if (window.event.keyCode == 13)
     {
 		var ingId = randomString(5);
-		document.getElementById('ingList').innerHTML = document.getElementById('ingList').innerHTML + '<li style="size: 4em" id="'+ ingId + '">' + '<a style="float:right" href="#" onclick="removeDiv(\'' + ingId + '\',0)">[x]</a>' + document.getElementById('ing').value + '<a style="float:right" href="#" onclick="editDiv(\'' + ingId + '\')">[edit]</a></li>';
+		document.getElementById('ingList').innerHTML = document.getElementById('ingList').innerHTML + '<li style="size: 4em" id="'+ ingId + '">' + '<a style="float:right" href="#" onclick="removeAndRebuildList(\'' + ingId + '\',0)">[x]</a>' + document.getElementById('ing').value + '<a style="float:right" href="#" onclick="editDiv(\'' + ingId + '\',0)">[edit]</a></li>';
 		document.getElementById('ings').value = document.getElementById('ings').value + '|' + document.getElementById('ing').value + '|';
 		document.getElementById('ing').value = "";
     }
@@ -168,15 +214,8 @@ function checkEdit(ingId,mode)
     {
     	var div = document.getElementById(ingId);
     	var editBox = document.getElementById('edit'+ingId);
-		if( mode == 0 )
-		{
-			document.getElementById('ings').value = replaceItem(document.getElementById('ings').value,div.firstChild.whoteText,editBox.value);
-		}
-		else
-		{
-			document.getElementById('insts').value = replaceItem(document.getElementById('insts').value,div.firstChild.whoteText,editBox.value);
-		}
-		div.innerHTML = editBox.value + '<a style="float:right" href="#" onclick="removeDiv(\'' + ingId + '\',0)">[x]</a><a style="float:right" href="#" onclick="editDiv(\'' + ingId + '\')">[edit]</a>';
+		div.innerHTML = editBox.value + '<a style="float:right" href="#" onclick="removeAndRebuildList(\'' + ingId + '\',0)">[x]</a><a style="float:right" href="#" onclick="editDiv(\'' + ingId + '\',' + mode + ')">[edit]</a>';
+		rebuildList(ingId,mode);
     }
 }
 
@@ -191,7 +230,7 @@ function checkInstSubmit()
     if (window.event.keyCode == 13)
     {
 		var instId = randomString(5);
-		document.getElementById('instList').innerHTML = document.getElementById('instList').innerHTML + '<li style="size: 4em" id="'+ instId + '">' + document.getElementById('inst').value + '<a style="float:right" href="#" onclick="removeDiv(\'' + instId + '\',1)">[x]</a><a style="float:right" href="#" onclick="editDiv(\'' + instId + '\')">[edit]</a></li>';
+		document.getElementById('instList').innerHTML = document.getElementById('instList').innerHTML + '<li style="size: 4em" id="'+ instId + '">' + document.getElementById('inst').value + '<a style="float:right" href="#" onclick="removeAndRebuildList(\'' + instId + '\',1)">[x]</a><a style="float:right" href="#" onclick="editDiv(\'' + instId + '\',1)">[edit]</a></li>';
 		document.getElementById('insts').value = document.getElementById('insts').value + '|' + document.getElementById('inst').value + '|';
 		document.getElementById('inst').value = "";
     }

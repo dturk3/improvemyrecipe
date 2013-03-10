@@ -52,7 +52,7 @@ Cook time: ${cook}
 		String ing = ""
 		String inst = ""
 		ingredients.each{ ing+="<li>${FuzzyQuantityConverter.toFuzzy(it.quantity)} ${it.unit} ${it.name}</li>\n" }
-		instructions.each{ inst+="<li>${instructions.indexOf(it)+1}. ${it.instruction}</li>\n" }
+		instructions.each{ inst+="<li>${it.instruction}</li>\n" }
 """
 <strong>${title}</strong> 
 <div class="subtitle">${author}</div>

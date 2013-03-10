@@ -16,6 +16,7 @@ class StoredRecipe {
 	int improvements
 	List<Comment> comments
 	int views
+	int imageId
 	//byte[] photo
 	
 	static hasMany = [history: StoredChangeset, tags: String, comments: Comment]

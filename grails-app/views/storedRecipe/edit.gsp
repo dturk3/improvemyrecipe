@@ -210,19 +210,12 @@ Browse</g:link>
 		    		<span class="small">Ex: "2" or "3-4"</span>
 			    </label> 
    			    <g:textField style="width:40px" name="servings" value="${r.serves}"/><br/>
-		    <label>
-				    Upload Image
-		    		<span class="small">Optional max. 500 KB</span>
-		    </label> 
 		    <% List<String> ingStrings = r.ingredients.collect{ "${it.quantity} ${it.unit} ${it.name}" } %>
+		    <% List<String> instStrings = r.instructions.collect{ "${it.instruction}" } %>
 			<g:hiddenField name="ings" id="ings" value="${ingStrings.join('|')}"/>
-			<g:hiddenField name="insts" id= "insts" value="${r.instructions.join('|')}"/>
+			<g:hiddenField name="insts" id= "insts" value="${instStrings.join('|')}"/>
 			<g:hiddenField name="id" value="${storedRecipeInstance?.id}"/>
-			<fileuploader:form	upload="images" 
-				successAction="show"
-				successController="storedRecipe"
-				errorAction="create"
-				errorController="storedRecipe"/>
+			<g:submitButton name="improve" value="Improve" />
 			</g:form>
 		</div>
 		</td>
@@ -238,7 +231,7 @@ Browse</g:link>
 		    <div name="ingList" id="ingList">
 		    <% def n=0 %>
 		    <g:each in="${r.ingredients}">
-    			<li style="size: 4em" id="${n}">${it.quantity.toString()} ${it.unit} ${it.name}<a style="float:right" href="#" onclick="removeDiv('${n}',0)">[x]</a><a style="float:right" href="#" onclick="editDiv('${n}')">[edit]</a></li>
+    			<li style="size: 4em" id="${n}">${it.quantity.toString()} ${it.unit} ${it.name}<a style="float:right" href="#" onclick="removeAndRebuildList'${n}',0)">[x]</a><a style="float:right" href="#" onclick="editDiv('${n}')">[edit]</a></li>
     			<% n++ %>
    			</g:each>
 		    </div>
@@ -256,7 +249,7 @@ Browse</g:link>
 		    <ol name="instList" id="instList">
    			    <% def m=0 %>
 			    <g:each in="${r.instructions}">
-		   			<li style="size: 4em" id="${n}">${it.instruction}<a style="float:right" href="#" onclick="removeDiv('${n}',1)">[x]</a><a style="float:right" href="#" onclick="editDiv('${n}')">[edit]</a></li>
+		   			<li style="size: 4em" id="${n}">${it.instruction}<a style="float:right" href="#" onclick="removeAndRebuildList'${n}',1)">[x]</a><a style="float:right" href="#" onclick="editDiv('${n}')">[edit]</a></li>
 		   			<% n++ %>
 	  			</g:each>
 		    </ol>

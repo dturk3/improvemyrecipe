@@ -88,6 +88,8 @@ Browse</g:link>
 	</div>
 	<div style="float:right" class="announcementBox">
 		<div class="tagCloudTitle">ANNOUNCEMENTS</div>
+		<h1>improvemyrecipe.com</h1>
+		<p>Welcome to the launch of improvemyrecipe.com! We are still working on certain aspects of our site, please be patient over the coming weeks as we finalize our layout and features. In the meantime, feel free to register, contribute your recipes and browse.</p>
 	</div>
     <tbody>
       <tr>
@@ -115,6 +117,8 @@ Browse</g:link>
         	<g:each in="${recipeService.getStoredRecipes()}">
 	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
 	       			<div id="insetBgd">
+	       				<!-- TODO: if no image, do not display! -->
+	       				<img src="${createLink(controller:'fileUploader', action:'show', id:it.storedRecipe.imageId )}" style="float:left;margin-right:10px;border:1px gray solid;" width="70" height="70" />
 						<h1 class="insetType"><a href="storedRecipe/show/${it.storedRecipe.id}">${it.recipe.title}</a></h1>
 						<h2 class="insetType">${it.recipe.author}</h2>
 						<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>
@@ -144,6 +148,8 @@ Browse</g:link>
      		<g:each in="${recipeService.getTrendingRecipes()}">
 	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
 	       			<div id="insetBgd">
+   				       	<!-- TODO: if no image, do not display! -->
+	       				<img src="${createLink(controller:'fileUploader', action:'show', id:it.storedRecipe.imageId )}" style="float:left;margin-right:10px;border:1px gray solid;" width="70" height="70" />
 						<h1 class="insetType"><a href="storedRecipe/show/${it.storedRecipe.id}">${it.recipe.title}</a></h1>
 						<h2 class="insetType">${it.recipe.author}</h2>
 						<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>
@@ -172,6 +178,8 @@ Browse</g:link>
        		<g:each in="${recipeService.getImprovedRecipes()}">
 	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
 	       			<div id="insetBgd">
+	       				<!-- TODO: if no image, do not display! -->
+	       				<img src="${createLink(controller:'fileUploader', action:'show', id:it.storedRecipe.imageId )}" style="float:left;margin-right:10px;border:1px gray solid;" width="70" height="70" />
 						<h1 class="insetType"><a href="storedRecipe/show/${it.storedRecipe.id}">${it.recipe.title}</a></h1>
 						<h2 class="insetType">${it.recipe.author}</h2>
 						<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>

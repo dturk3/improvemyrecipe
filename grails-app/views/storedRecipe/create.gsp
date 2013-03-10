@@ -183,7 +183,7 @@ Browse</g:link>
         <td valign="top">
 		<div id="stylized" class="myform">
 			<p>General recipe parameters</p>
-			<g:form controller="storedRecipe" action="save" params="[ings: ingList]">
+			<g:form controller="storedRecipe" action="upload"  method="post" enctype="multipart/form-data">
 				<label>
 				    Title
 		    		<span class="small">Ex: "Grilled Cheese in Butter"</span>
@@ -222,11 +222,13 @@ Browse</g:link>
 		    </label> 
 			<g:hiddenField name="ings" id="ings"/>
 			<g:hiddenField name="insts" id= "insts"/>
-			<fileuploader:form	upload="images" 
+			<input type="file" name="file" />
+			<!--<fileuploader:form	upload="images" 
 				successAction="show"
 				successController="storedRecipe"
 				errorAction="create"
-				errorController="storedRecipe"/>
+				errorController="storedRecipe"/>-->
+			<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 			</g:form>
 		</div>
 		</td>

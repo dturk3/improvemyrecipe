@@ -4,7 +4,7 @@ import org.springframework.dao.DataIntegrityViolationException
 
 class StoredRecipeController {
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static allowedMethods = [update: "POST", delete: "POST"]
 	
 	def recipeService
 	def authenticationService
@@ -120,30 +120,37 @@ class StoredRecipeController {
 	def search() {
 		redirect(action: "list", params: params)
 	}
+	
+	def upload()
+	{
+		flash.currentRecipeParams = params
+		forward(controller:"fileUploader",action:"process",params:[upload:"images",successAction:"save",successController:"storedRecipe",errorAction:"create",errorController:"storedRecipe"])
+	}
 
     def save() {
+		println flash.currentRecipeParams
 		Time prepTime = new Time()
-		prepTime.quantity = Double.valueOf(params.prepTime)
-		prepTime.time = TimeUnit.valueOf(params.prepTimeUnit)
+		prepTime.quantity = Double.valueOf(flash.currentRecipeParams.prepTime)
+		prepTime.time = TimeUnit.valueOf(flash.currentRecipeParams.prepTimeUnit)
 		Time cookTime = new Time()
-		cookTime.quantity = Double.valueOf(params.cookTime)
-		cookTime.time = TimeUnit.valueOf(params.cookTimeUnit)
+		cookTime.quantity = Double.valueOf(flash.currentRecipeParams.cookTime)
+		cookTime.time = TimeUnit.valueOf(flash.currentRecipeParams.cookTimeUnit)
 		int minS, maxS
-		if( params.servings.contains('-') )
+		if( flash.currentRecipeParams.servings.contains('-') )
 		{
-			minS=Integer.valueOf(params.servings.split('-')[0])
-			maxS=Integer.valueOf(params.servings.split('-')[1])
+			minS=Integer.valueOf(flash.currentRecipeParams.servings.split('-')[0])
+			maxS=Integer.valueOf(flash.currentRecipeParams.servings.split('-')[1])
 		}
 		else
 		{
-			minS=Integer.valueOf(params.servings)
+			minS=Integer.valueOf(flash.currentRecipeParams.servings)
 			maxS=minS
 		}
 		ServingRange srv = new ServingRange()
 		srv.min = minS
 		srv.max = maxS
 		//TODO The ings is a list for some reason - figure out why, for now use known index
-		List<String> ingListString = params.ings[1].split('\\|') as List
+		List<String> ingListString = flash.currentRecipeParams.ings.split('\\|') as List
 		List<Ingredient> ingList = []
 		ingListString.each { String ingEntry ->
 			if( ingEntry == null || ingEntry.equals('') || ingEntry.equals('\\|') ) {
@@ -157,7 +164,7 @@ class StoredRecipeController {
 			ingList << i
 		}
 		
-		List<String> instListString = params.insts.split('\\|') as List
+		List<String> instListString = flash.currentRecipeParams.insts.split('\\|') as List
 		List<InstructionStep> instList = []
 		instListString.each { String instEntry ->
 			if( instEntry == null || instEntry.equals('') || instEntry.equals('\\|') ) {
@@ -168,10 +175,10 @@ class StoredRecipeController {
 			instList << i
 		}
 		
-		Recipe r = new Recipe(params.title, authenticationService.getUserPrincipal().login, params.tags.split(',') as List, params.description, ingList, instList, prepTime, cookTime, srv )
+		Recipe r = new Recipe(flash.currentRecipeParams.title, authenticationService.getUserPrincipal().login, flash.currentRecipeParams.tags.split(',') as List, flash.currentRecipeParams.description, ingList, instList, prepTime, cookTime, srv )
 		println r
 		HgAdapter hga = new HgAdapter(Configuration.HG_REPO_DIR, Configuration.HG_BIN_PATH)
-		StoredRecipe sr = recipeService.storeRecipe(r)
+		StoredRecipe sr = recipeService.storeRecipe(r, params.ufileId)
         def storedRecipeInstance = sr
 		println sr
         if (!storedRecipeInstance.save(flush: true)) {

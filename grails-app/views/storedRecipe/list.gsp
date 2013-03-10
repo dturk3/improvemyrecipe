@@ -47,7 +47,7 @@ improvemyrecipe.com</a>
 About</a>
 </div>
 <div style="float: right; height: 30%; margin-right: 30px;" class="titlestyle">
-<g:link class="titlestyle" style="text-decoration: none;" controller="StoredRecipe" action="list">
+<g:link class="titlestyle" style="text-decoration: none;" url="/improvemyrecipe">
 Browse</g:link>
 </div>
 <g:if test="${!authService.isLoggedIn(request)}" >
@@ -82,8 +82,14 @@ Browse</g:link>
       <col></col>
       <col></col>
     </colgroup>
-  	<div class="tagCloud">
+  	<div style="float:left" class="tagCloud">
+  		<div class="tagCloudTitle">POPULAR NOW</div>
    		<richui:tagCloud class="tag" values="${recipeService.getTagCloud()}" />
+	</div>
+	<div style="float:right" class="announcementBox">
+		<div class="tagCloudTitle">ANNOUNCEMENTS</div>
+		<h1>improvemyrecipe.com</h1>
+		<p>Welcome to the launch of improvemyrecipe.com! We are still working on certain aspects of our site, please be patient over the coming weeks as we finalize our layout and features. In the meantime, feel free to register, contribute your recipes and browse.</p>
 	</div>
     <tbody>
       <tr>
