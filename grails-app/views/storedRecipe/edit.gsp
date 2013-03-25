@@ -25,77 +25,6 @@ require([
 </script>
 <style>@import "../../themes/claro/document.css";@import "../../themes/claro/claro.css";@import "../../app.css";
 </style>
-<style>
-			p, form, button{border:0; margin:0; padding:0;}
-			.spacer{clear:both; height:1px;}
-			/* ----------- My Form ----------- */
-			.myform{
-			margin:0 auto;
-			width:94%;
-			height:450px;
-			padding:14px;
-			}
-			
-			/* ----------- stylized ----------- */
-			#stylized{
-			border:solid 2px #b7ddf2;
-			background:#ebf4fb;
-			}
-			#stylized h1 {
-			font-size:14px;
-			font-weight:bold;
-			margin-bottom:8px;
-			}
-			#stylized p{
-			font-size:11px;
-			color:#666666;
-			margin-bottom:20px;
-			border-bottom:solid 1px #b7ddf2;
-			padding-bottom:10px;
-			}
-			#stylized label{
-			margin-left: 20px;
-			float: left;
-			display:block;
-			text-align:right;
-			width:140px;
-			}
-			#stylized .small{
-			color:#666666;
-			display:block;
-			font-size:11px;
-			font-weight:normal;
-			text-align:right;
-			width:140px;
-			}
-			#stylized .med{
-			color:#000000;
-			display:block;
-			font-size:13px;
-			font-weight:normal;
-			text-align:left;
-			width:95%;
-			}
-			#stylized input{
-			font-size:12px;
-			padding:4px 2px;
-			border:solid 1px #aacfe4;
-			width:280px;
-			margin:2px 0 20px 10px;
-			}
-			#stylized button{
-			clear:both;
-			margin-left:150px;
-			width:125px;
-			height:31px;
-			background:#666666 url(img/button.png) no-repeat;
-			text-align:center;
-			line-height:31px;
-			color:#FFFFFF;
-			font-size:11px;
-			font-weight:bold;
-			}
-		</style>
 <!--<script type="text/javascript" src="app.js"></script>-->
 <g:javascript library="jquery" />
 <g:setProvider library="jquery"/>
@@ -109,7 +38,7 @@ require([
     	def authService = grailsApplication.classLoader.loadClass('com.grailsrocks.authentication.AuthenticationService').newInstance()
 	%>
 <body class="claro" data-maq-flow-layout="true" data-maq-comptype="desktop" data-maq-ws="collapse" data-maq-appstates="{}" id="myapp">
- <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="top" splitter="true" maxSize="Infinity" doLayout="false" style="border: 1px solid gray; border-radius: 3px; -moz-border-radius: 3px; height: 44px; background-color: #88b897;">
+ <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="top" splitter="true" maxSize="Infinity" doLayout="false" style="border: 1px solid gray; height: 44px; background-color: #88b897;">
 <h4 style="float: left; height: 30%; right: 10px; top: -35px; left: 5px;" class="titlestyle">,</h4>
 <h3 style="float: left; height: 30%; left: 10px;" data-title="improvemyrecipe" class="titlestyle">
 <a href="/improvemyrecipe">

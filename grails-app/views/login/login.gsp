@@ -23,77 +23,6 @@
 		</script>
 		<style>@import "../themes/claro/document.css";@import "../themes/claro/claro.css";@import "../app.css";
 		</style>
-		<style>
-			p, form, button{border:0; margin:0; padding:0;}
-			.spacer{clear:both; height:1px;}
-			/* ----------- My Form ----------- */
-			.myform{
-			margin:0 auto;
-			width:94%;
-			height:450px;
-			padding:14px;
-			}
-			
-			/* ----------- stylized ----------- */
-			#stylized{
-			border:solid 2px #b7ddf2;
-			background:#ebf4fb;
-			}
-			#stylized h1 {
-			font-size:14px;
-			font-weight:bold;
-			margin-bottom:8px;
-			}
-			#stylized p{
-			font-size:11px;
-			color:#666666;
-			margin-bottom:20px;
-			border-bottom:solid 1px #b7ddf2;
-			padding-bottom:10px;
-			}
-			#stylized label{
-			margin-left: 20px;
-			float: left;
-			display:block;
-			text-align:right;
-			width:140px;
-			}
-			#stylized .small{
-			color:#666666;
-			display:block;
-			font-size:11px;
-			font-weight:normal;
-			text-align:right;
-			width:140px;
-			}
-			#stylized .med{
-			color:#000000;
-			display:block;
-			font-size:13px;
-			font-weight:normal;
-			text-align:left;
-			width:95%;
-			}
-			#stylized input{
-			font-size:12px;
-			padding:4px 2px;
-			border:solid 1px #aacfe4;
-			width:280px;
-			margin:2px 0 20px 10px;
-			}
-			#stylized button{
-			clear:both;
-			margin-left:150px;
-			width:125px;
-			height:31px;
-			background:#666666 url(img/button.png) no-repeat;
-			text-align:center;
-			line-height:31px;
-			color:#FFFFFF;
-			font-size:11px;
-			font-weight:bold;
-			}
-		</style>
 		<g:javascript library="jquery" />
 		<g:setProvider library="jquery"/>
 		<r:layoutResources/>
@@ -105,7 +34,7 @@
 	    	def authService = grailsApplication.classLoader.loadClass('com.grailsrocks.authentication.AuthenticationService').newInstance()
 		%>
 	<body class="claro" data-maq-flow-layout="true" data-maq-comptype="desktop" data-maq-ws="collapse" data-maq-appstates="{}" id="myapp">
- <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="top" splitter="true" maxSize="Infinity" doLayout="false" style="border: 1px solid gray; border-radius: 3px; -moz-border-radius: 3px; height: 44px; background-color: #88b897;">
+ <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="top" splitter="true" maxSize="Infinity" doLayout="false" style="border: 1px solid gray; height: 44px; background-color: #88b897;">
 <h4 style="float: left; height: 30%; right: 10px; top: -35px; left: 5px;" class="titlestyle">,</h4>
 <h3 style="float: left; height: 30%; left: 10px;" data-title="improvemyrecipe" class="titlestyle">
 <a href="/improvemyrecipe">
@@ -165,27 +94,24 @@ Browse</g:link>
 			        <th class="notepad-heading">
 			          <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
 			            Log In</h1>
-			          <h1 style="font-family: webdings; font-size: 2.2em; top: -10px;">
-			            Ñ</h1>
+			          <object style="float: left; padding: 5px; margin-top: -25px; height: 32px; width: 32px; margin-left: 10px;" data="../images/login.svg" type="image/svg+xml"></object>
 			        </th>
 			        <th class="notepad-heading">
 			    <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
 			            Sign Up</h1>
-			    <h1 style="font-family: webdings; font-size: 2.2em; float: none;">
-			      †</h1>
+    			<object style="float: left; padding: 5px; margin-top: -25px; height: 32px; width: 32px; margin-left: 10px;" data="../images/sup.svg" type="image/svg+xml"></object>
 			        </th>
 			        <th class="notepad-heading">
 			    <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
 			            Why Join?</h1>
-			    <h1 style="font-family: webdings; font-size: 2.2em; float: none;">
-			      i</h1>
+    			<object style="float: left; padding: 5px; margin-top: -25px; height: 32px; width: 32px; margin-left: 10px;" data="../images/whyjoin.svg" type="image/svg+xml"></object>
 			        </th>
 			      </tr>
 			      <tr>
 			        <td valign="top">
 						<auth:ifLoggedIn>
 						<div id="stylized" class="myform">
-							<div class="success"><div style="font-family: webdings; font-size: 2.2em; margin-left:-35px; margin-top:-5px; float:left">a</div>You are currently logged in as: <auth:user/></div>
+							<div class="success"><object style="float: left; margin-top: -5px; margin-left: -40px; height: 32px; width: 32px;" data="../images/success.svg" type="image/svg+xml"></object>You are currently logged in as: <auth:user/></div>
 							<auth:form authAction="logout" success="[controller:'login', action:'index']" error="[controller:'login', action:'index']">
 							    <g:actionSubmit value="Log out"/> 
 							</auth:form>
@@ -198,7 +124,7 @@ Browse</g:link>
 						<div id="stylized" class="myform">
 							<p>You are currently browsing as a guest. Please log in or sign up:</p>
 							<g:if test="${flash.authenticationFailure}">
-								<div class="error">Sorry but your login/signup failed - reason: <g:message code="authentication.failure.${flash.authenticationFailure.result}"/></div>
+								<div class="error"><object style="float: left; margin-top: -5px; margin-left: -40px; height: 32px; width: 32px;" data="../images/error.svg" type="image/svg+xml"></object>Sorry but your login/signup failed - reason: <g:message code="authentication.failure.${flash.authenticationFailure.result}"/></div>
 							</g:if>
 							<auth:form authAction="login" success="[controller:'login', action:'index']" error="[controller:'login', action:'index']">
    								<label>
@@ -220,7 +146,7 @@ Browse</g:link>
  							<div id="stylized" class="myform">
  								<p>Register for FREE to become a member of our community!</p>
 								<g:if test="${flash.authenticationFailure}">
-									<div class="error"><div style="font-family: webdings; font-size: 2.2em; margin-left:-35px; margin-top:-5px; float:left">x</div>Sorry but your login/signup failed - reason: <g:message code="authentication.failure.${flash.authenticationFailure.result}"/></div>
+									<div class="error"><object style="float: left; margin-top: -5px; margin-left: -40px; height: 32px; width: 32px;" data="../images/error.svg" type="image/svg+xml"></object>Sorry but your login/signup failed - reason: <g:message code="authentication.failure.${flash.authenticationFailure.result}"/></div>
 								</g:if>
 								<auth:form name="signupForm" authAction="signup" success="[controller:'login', action:'index']" error="[controller:'login', action:'index']">
     								<label>

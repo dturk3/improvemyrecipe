@@ -26,75 +26,7 @@ require([
 <style>@import "../themes/claro/document.css";@import "../themes/claro/claro.css";@import "../app.css";
 </style>
 <style>
-			p, form, button{border:0; margin:0; padding:0;}
-			.spacer{clear:both; height:1px;}
-			/* ----------- My Form ----------- */
-			.myform{
-			margin:0 auto;
-			width:94%;
-			height:450px;
-			padding:14px;
-			}
 			
-			/* ----------- stylized ----------- */
-			#stylized{
-			border:solid 2px #b7ddf2;
-			background:#ebf4fb;
-			}
-			#stylized h1 {
-			font-size:14px;
-			font-weight:bold;
-			margin-bottom:8px;
-			}
-			#stylized p{
-			font-size:11px;
-			color:#666666;
-			margin-bottom:20px;
-			border-bottom:solid 1px #b7ddf2;
-			padding-bottom:10px;
-			}
-			#stylized label{
-			margin-left: 20px;
-			float: left;
-			display:block;
-			text-align:right;
-			width:140px;
-			}
-			#stylized .small{
-			color:#666666;
-			display:block;
-			font-size:11px;
-			font-weight:normal;
-			text-align:right;
-			width:140px;
-			}
-			#stylized .med{
-			color:#000000;
-			display:block;
-			font-size:13px;
-			font-weight:normal;
-			text-align:left;
-			width:95%;
-			}
-			#stylized input{
-			font-size:12px;
-			padding:4px 2px;
-			border:solid 1px #aacfe4;
-			width:280px;
-			margin:2px 0 20px 10px;
-			}
-			#stylized button{
-			clear:both;
-			margin-left:150px;
-			width:125px;
-			height:31px;
-			background:#666666 url(img/button.png) no-repeat;
-			text-align:center;
-			line-height:31px;
-			color:#FFFFFF;
-			font-size:11px;
-			font-weight:bold;
-			}
 		</style>
 <!--<script type="text/javascript" src="app.js"></script>-->
 <g:javascript library="jquery" />
@@ -109,7 +41,7 @@ require([
     	def authService = grailsApplication.classLoader.loadClass('com.grailsrocks.authentication.AuthenticationService').newInstance()
 	%>
 <body class="claro" data-maq-flow-layout="true" data-maq-comptype="desktop" data-maq-ws="collapse" data-maq-appstates="{}" id="myapp">
- <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="top" splitter="true" maxSize="Infinity" doLayout="false" style="border: 1px solid gray; border-radius: 3px; -moz-border-radius: 3px; height: 44px; background-color: #88b897;">
+ <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="top" splitter="true" maxSize="Infinity" doLayout="false" style="border: 1px solid gray; height: 44px; background-color: #88b897;">
 <h4 style="float: left; height: 30%; right: 10px; top: -35px; left: 5px;" class="titlestyle">,</h4>
 <h3 style="float: left; height: 30%; left: 10px;" data-title="improvemyrecipe" class="titlestyle">
 <a href="/improvemyrecipe">
@@ -155,28 +87,31 @@ Browse</g:link>
       <col></col>
       <col></col>
     </colgroup>
-  	<div class="tagCloud">
+  	<div style="float:left" class="tagCloud">
+  		<div class="tagCloudTitle">POPULAR NOW</div>
    		<richui:tagCloud class="tag" values="${recipeService.getTagCloud()}" />
+	</div>
+	<div style="float:right" class="announcementBox">
+		<div class="tagCloudTitle">ANNOUNCEMENTS</div>
+		<h1>Submit a Recipe</h1>
+		<p>Follow the intuitive on-screen prompts to quickly submit your favourite recipes to us. We do not own your recipes, and we are not liable for anything that pertains to them after they are submitted. We simply want to help share them with other foodies.</p>
 	</div>
     <tbody>
       <tr>
         <th class="notepad-heading">
           <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
             Basic Information</h1>
-          <h1 style="font-family: webdings; font-size: 2.2em; top: -10px;">
-            ä</h1>
+    	<object style="float: left; padding: 5px; margin-top: -25px; height: 32px; width: 32px; margin-left: 10px;" data="../images/info.svg" type="image/svg+xml"></object>
         </th>
         <th class="notepad-heading">
     <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
             Ingredient List</h1>
-    <h1 style="font-family: webdings; font-size: 2.2em; float: none;">
-      %</h1>
+    <object style="float: left; padding: 5px; margin-top: -25px; height: 32px; width: 32px; margin-left: 10px;" data="../images/list.svg" type="image/svg+xml"></object>
         </th>
         <th class="notepad-heading">
     <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
             Cooking Instructions</h1>
-    <h1 style="font-family: webdings; font-size: 2.2em; float: none;">
-      `</h1>
+    <object style="float: left; padding: 5px; margin-top: -25px; height: 32px; width: 32px; margin-left: 10px;" data="../images/instructions.svg" type="image/svg+xml"></object>
         </th>
       </tr>
       <tr>
@@ -240,7 +175,7 @@ Browse</g:link>
 	    		<span class="small">Ex: "3 tbsp butter" or "3 slice cheddar"</span>
 		    </label> 
 		    <input type="text" name="ing" id="ing" onKeyUp="validateIng(this,event);"/><br/>
-		    <div class="info"><div style="font-family: webdings; font-size: 2.2em; margin-left:-35px; margin-top:-5px; float:left">4</div><div id="ingTip" >Start by typing ingredients quantity...</div></div>
+		    <div class="info"><object style="float: left; margin-top: -5px; margin-left: -40px; height: 32px; width: 32px;" data="../images/tip.svg" type="image/svg+xml"></object><div id="ingTip" >Start by typing ingredients quantity...</div></div>
 		    <div name="ingList" id="ingList"></div>
 		</div>
         </td>
@@ -252,7 +187,7 @@ Browse</g:link>
 	    		<span class="small">Ex: "Simmer on low heat for 5 minutes."</span>
 		    </label> 
 		    <input type="text" name="inst" id="inst" onKeyUp="validateInst(this,event);"/><br/>
-   		    <div class="info"><div style="font-family: webdings; font-size: 2.2em; margin-left:-35px; margin-top:-5px; float:left">4</div><div id="instTip" >Type a cooking instruction and hit ENTER to add it to the list.</div></div>
+   		    <div class="info"><object style="float: left; margin-top: -5px; margin-left: -40px; height: 32px; width: 32px;" data="../images/tip.svg" type="image/svg+xml"></object><div id="instTip" >Type a cooking instruction and hit ENTER to add it to the list.</div></div>
 		    <ol name="instList" id="instList"></ol>
 		</div>
         </td>

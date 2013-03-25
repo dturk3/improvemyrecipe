@@ -36,8 +36,8 @@ require([
     	def authService = grailsApplication.classLoader.loadClass('com.grailsrocks.authentication.AuthenticationService').newInstance()
 	%>
 <body class="claro" data-maq-flow-layout="true" data-maq-comptype="desktop" data-maq-ws="collapse" data-maq-appstates="{}" id="myapp">
- <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="top" splitter="true" maxSize="Infinity" doLayout="false" style="border: 1px solid gray; border-radius: 3px; -moz-border-radius: 3px; height: 44px; background-color: #88b897;">
-<h4 style="float: left; height: 30%; right: 10px; top: -35px; left: 5px;" class="titlestyle">,</h4>
+ <div data-dojo-type="dijit.layout.ContentPane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" region="top" splitter="true" maxSize="Infinity" doLayout="false" style="border: 1px solid gray; height: 44px; background-color: #88b897; overflow: hidden;">
+<object style="float: left; margin-top: -10px;" data="images/logo.svg" type="image/svg+xml"></object>
 <h3 style="float: left; height: 30%; left: 10px;" data-title="improvemyrecipe" class="titlestyle">
 <a href="/improvemyrecipe">
 improvemyrecipe.com</a>
@@ -96,26 +96,23 @@ Browse</g:link>
         <th class="notepad-heading">
           <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
             Recent Recipes</h1>
-          <h1 style="font-family: webdings; font-size: 2.2em; top: -10px;">
-            ä</h1>
+          <object style="float: left; padding: 5px; margin-top: -25px; height: 32px; width: 32px; margin-left: 10px;" data="images/dinner.svg" type="image/svg+xml"></object>
         </th>
         <th class="notepad-heading">
     <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
             Trending Recipes</h1>
-    <h1 style="font-family: webdings; font-size: 2.2em; float: none;">
-      %</h1>
+    <object style="float: left; padding: 5px; margin-top: -25px; height: 32px; width: 32px; margin-left: 10px;" data="images/trending.svg" type="image/svg+xml"></object>
         </th>
         <th class="notepad-heading">
     <h1 style="font-family: Lucida Sans Unicode; font-size: 1.2em;">
             Recently Improved</h1>
-    <h1 style="font-family: webdings; font-size: 2.2em; float: none;">
-      `</h1>
+    <object style="float: left; padding: 5px; margin-top: -25px; height: 32px; width: 32px; margin-left: 10px;" data="images/improved.svg" type="image/svg+xml"></object>
         </th>
       </tr>
       <tr>
         <td valign="top">
         	<g:each in="${recipeService.getStoredRecipes()}">
-	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
+	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 95%;" doLayout="false" class="recipeBox">
 	       			<div id="insetBgd">
 	       				<!-- TODO: if no image, do not display! -->
 	       				<img src="${createLink(controller:'fileUploader', action:'show', id:it.storedRecipe.imageId )}" style="float:left;margin-right:10px;border:1px gray solid;" width="70" height="70" />
@@ -124,17 +121,18 @@ Browse</g:link>
 						<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>
 					    <h3 class="insetType">${it.recipe.description}</h3>
 						<div class="insetTypeLikes" style="color: #660000">
-							<g:remoteLink style="float:left" class="insetTypeLikes" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
-								D
+							<g:remoteLink style="float:left; color: #000000" class="insetTypeLikes" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
+							Dislike
 							</g:remoteLink>
 							<div class="insetTypeLikes" style="font-family: Rockwell; color: #660000" id="dislikes${it.storedRecipe.id}">
 								${it.storedRecipe.dislikes}
 							</div>
 						</div>
-						<div class="insetTypeLikes">
-							<g:remoteLink style="float:left" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
-								C
+   						<div class="insetTypeLikes">
+							<g:remoteLink style="float:left; color: #000000" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
+							Like
 							</g:remoteLink>
+								</object>
 							<div class="insetTypeLikes" style="font-family: Rockwell" id="likes${it.storedRecipe.id}">
 								${it.storedRecipe.likes}
 							</div>
@@ -146,7 +144,7 @@ Browse</g:link>
 		</td>
         <td valign="top">
      		<g:each in="${recipeService.getTrendingRecipes()}">
-	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
+	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 95%;" doLayout="false" class="recipeBox">
 	       			<div id="insetBgd">
    				       	<!-- TODO: if no image, do not display! -->
 	       				<img src="${createLink(controller:'fileUploader', action:'show', id:it.storedRecipe.imageId )}" style="float:left;margin-right:10px;border:1px gray solid;" width="70" height="70" />
@@ -155,28 +153,29 @@ Browse</g:link>
 						<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>
 					    <h3 class="insetType">${it.recipe.description}</h3>
 						<div class="insetTypeLikes" style="color: #660000">
-							<g:remoteLink style="float:left" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
-								D
+							<g:remoteLink style="float:left; color: #000000" class="insetTypeLikes" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
+							Dislike
 							</g:remoteLink>
 							<div class="insetTypeLikes" style="font-family: Rockwell; color: #660000" id="dislikes${it.storedRecipe.id}">
 								${it.storedRecipe.dislikes}
 							</div>
-						</div>
-						<div class="insetTypeLikes">
-							<g:remoteLink style="float:left" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
-								C
+						</div>				
+   						<div class="insetTypeLikes">
+							<g:remoteLink style="float:left; color: #000000" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
+							Like
 							</g:remoteLink>
+								</object>
 							<div class="insetTypeLikes" style="font-family: Rockwell" id="likes${it.storedRecipe.id}">
 								${it.storedRecipe.likes}
 							</div>
-						</div>					
+						</div>
 					</div>
 				</div>
         	</g:each>
         </td>
         <td valign="top">
        		<g:each in="${recipeService.getImprovedRecipes()}">
-	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 96%;" doLayout="false" class="recipeBox">
+	        	<div data-dojo-type="dijit.layout.ContentPane" title="Pane" extractContent="false" preventCache="false" preload="false" refreshOnShow="false" style="height: auto; width: 95%;" doLayout="false" class="recipeBox">
 	       			<div id="insetBgd">
 	       				<!-- TODO: if no image, do not display! -->
 	       				<img src="${createLink(controller:'fileUploader', action:'show', id:it.storedRecipe.imageId )}" style="float:left;margin-right:10px;border:1px gray solid;" width="70" height="70" />
@@ -185,17 +184,18 @@ Browse</g:link>
 						<div class="insetTypeDate">${it.recipe.created}</div><br/><br/>
 					    <h3 class="insetType">${it.recipe.description}</h3>
 						<div class="insetTypeLikes" style="color: #660000">
-							<g:remoteLink style="float:left" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
-								D
+							<g:remoteLink style="float:left; color: #000000" class="insetTypeLikes" controller="storedRecipe" action="dislike" id="${it.storedRecipe.id}" update="dislikes${it.storedRecipe.id}">
+							Dislike
 							</g:remoteLink>
 							<div class="insetTypeLikes" style="font-family: Rockwell; color: #660000" id="dislikes${it.storedRecipe.id}">
 								${it.storedRecipe.dislikes}
 							</div>
 						</div>
-						<div class="insetTypeLikes">
-							<g:remoteLink style="float:left" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
-								C
+   						<div class="insetTypeLikes">
+							<g:remoteLink style="float:left; color: #000000" controller="storedRecipe" action="like" id="${it.storedRecipe.id}" update="likes${it.storedRecipe.id}">
+							Like
 							</g:remoteLink>
+								</object>
 							<div class="insetTypeLikes" style="font-family: Rockwell" id="likes${it.storedRecipe.id}">
 								${it.storedRecipe.likes}
 							</div>
